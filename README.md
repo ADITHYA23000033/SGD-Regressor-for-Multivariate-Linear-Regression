@@ -1,4 +1,5 @@
 # SGD-Regressor-for-Multivariate-Linear-Regression
+
 ## AIM:
 To write a program to predict the price of the house and number of occupants in the house with SGD regressor.
 
@@ -7,74 +8,48 @@ To write a program to predict the price of the house and number of occupants in 
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-### Step 1:
- Load California housing data, select features and targets, and split into training and testing sets.
-### Step 2:
-Scale both X (features) and Y (targets) using StandardScaler.
-### Step 3:
-Use SGDRegressor wrapped in MultiOutputRegressor to train on the scaled training data.
-### Step 4:
-Predict on test data, inverse transform the results, and calculate the mean squared error.
+1. Start the program and import the required libraries such as NumPy, Scikit-learn datasets, preprocessing, model selection, regression model, and evaluation metrics.
+2. Load the California Housing dataset, select input features and target variables, split the dataset into training and testing sets, and normalize the data using StandardScaler.
+3. Create the SGDRegressor model and wrap it using MultiOutputRegressor, then train the model using the training data and predict the output for the test data.
+4. Convert the predicted and test values back to original scale, calculate the Mean Squared Error (MSE), and display the error value along with sample predictions.
+
 ## Program:
-Program to implement the multivariate linear regression model for predicting the price of the house and number of occupants in
-the house with SGD regressor.
-
-### Developed by: ADITHYA V
-
-### RegisterNumber:  212223110001
-
 ```
-  import numpy as np
-  from sklearn.datasets import fetch_california_housing
-  from sklearn.linear_model import SGDRegressor
-  from sklearn.multioutput import MultiOutputRegressor
-  from sklearn.model_selection import train_test_split
-  from sklearn.metrics import mean_squared_error
-  from sklearn.preprocessing import StandardScaler
-
-  #load the california housing dataset
-  data = fetch_california_housing()
-
-  #use the first 3 features as inputs
-  X= data.data[:, :3] #features: 'Medinc','housage','averooms'
-  Y=np.column_stack((data.target,data.data[:, 6]))
-  x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.2,random_state=42)
-
-  #scale the features and target variables
-  scaler_x = StandardScaler()
-  scaler_y = StandardScaler()
-  x_train = scaler_x.fit_transform(x_train)
-  x_test = scaler_x.transform(x_test)
-  y_train = scaler_y.fit_transform(y_train)
-  y_test = scaler_y.transform(y_test)
-
-  #initialize the SGDRegressor
-  sgd = SGDRegressor(max_iter = 1000,tol = 1e-3)
-
-  #Use Multioutputregressor to handle multiple output varibles
-  multi_output_sgd = MultiOutputRegressor(sgd)
-
-  #train the model
-  multi_output_sgd.fit(x_train,y_train)
-
-  #predict on the test data
-  y_pred = multi_output_sgd.predict(x_test)
-
-  #inverse transform the prediction to get them back to the original scale
-  y_pred = scaler_y.inverse_transform(y_pred)
-  y_test = scaler_y.inverse_transform(y_test)
-
-  #evaluate the model using mean squared error
-  mse = mean_squared_error(y_test,y_pred)
-  print("Mean Squared Error:",mse)
-
-  #optionally print some predictions
-  print("\npredictions:\n",y_pred[:5])
-
+Program to implement the multivariate linear regression model for predicting the price of the house and number of occupants in the house with SGD regressor.
+Developed by: ADITHYA V V
+RegisterNumber:  212223110001
+```
+```python
+import numpy as np
+from sklearn.datasets import fetch_california_housing
+from sklearn.linear_model import SGDRegressor
+from sklearn.multioutput import MultiOutputRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import StandardScaler
+data=fetch_california_housing()
+X=data.data[:,:3]
+Y=np.column_stack((data.target,data.data[:,6]))
+X_train,X_test,Y_train,Y_test=train_test_split(X,Y,test_size=0.2,random_state=42)
+scaler_X=StandardScaler()
+scaler_Y=StandardScaler()
+X_train =scaler_X.fit_transform(X_train)
+X_test=scaler_X.transform(X_test)
+Y_train=scaler_Y.fit_transform(Y_train)
+Y_test=scaler_Y.transform(Y_test)
+sgd=SGDRegressor(max_iter=1000, tol=1e-3)
+multi_output_sgd=MultiOutputRegressor(sgd)
+multi_output_sgd.fit(X_train,Y_train)
+Y_pred=multi_output_sgd.predict(X_test)
+Y_pred=scaler_Y.inverse_transform(Y_pred)
+Y_test=scaler_Y.inverse_transform(Y_test)
+mse=mean_squared_error(Y_test,Y_pred)
+print("Mean Square Error:",mse)
+print("\nPredictions:\n",Y_pred[:5])
 ```
 
 ## Output:
-![365531700-e73d7abf-037f-448d-b75c-6f14e99949dd](https://github.com/user-attachments/assets/6b15952b-c97e-4e78-9d25-aead7518e9d1)
+<img width="624" height="194" alt="image" src="https://github.com/user-attachments/assets/bb85b070-723d-4cb1-99d8-16521bcfadff" />
 
 
 ## Result:
